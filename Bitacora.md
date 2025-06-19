@@ -5,3 +5,8 @@
 
 ## 12-06-2025 - Jueves
 Tuvimos nuestra primera reunión como grupo por Microsoft Teams para coordinar las tareas y definir los primeros pasos del proyecto.
+
+## 19-06-2025 - Jueves
+**Jhostyn Pacheco** implementó:
+- Clase `ArbolB` y `NodoB` con inserción y búsqueda de claves.
+- Integración del recorrido BFS en el grafo (BusquedaGrafo.java) junto a los métodos isVisitado() y setVisitado() en la clase Vertice.

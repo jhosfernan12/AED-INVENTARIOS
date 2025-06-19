@@ -1,32 +1,48 @@
-
-
 public class ListaAdyacencia<T> {
-    private ListaEnlazada<Tupla<Vertice<T>, ListaEnlazada<Arista<T>>>> lista;
+    private Vertice<T> origen;
+    private ListaEnlazada<Arista<T>> aristas;
 
-    public ListaAdyacencia() {
-        this.lista = new ListaEnlazada<>();
+    public ListaAdyacencia(Vertice<T> origen) {
+        this.origen = origen;
+        this.aristas = new ListaEnlazada<>();
     }
 
-    public void agregarVertice(Vertice<T> vertice) {
-        lista.agregar(new Tupla<>(vertice, new ListaEnlazada<>()));
+    public Vertice<T> getOrigen() {
+        return origen;
     }
 
-    public void agregarArista(Vertice<T> origen, Arista<T> arista) {
-        for (Tupla<Vertice<T>, ListaEnlazada<Arista<T>>> tupla : lista) {
-            if (tupla.getClave().equals(origen)) {
-                tupla.getValor().agregar(arista);
-                return;
-            }
+    public void agregarArista(Arista<T> arista) {
+        aristas.agregar(arista);
+    }
+
+    public boolean eliminarArista(Arista<T> arista) {
+        return aristas.eliminar(arista);
+    }
+
+    public ListaEnlazada<Arista<T>> getAristas() {
+        return aristas;
+    }
+
+    public Iterador<Arista<T>> iterador() {
+        return aristas.iterador();
+    }
+
+    public boolean estaVacia() {
+        return aristas.tamaño() == 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(origen.getDato()).append(" -> ");
+        Iterador<Arista<T>> iter = aristas.iterador();
+        boolean primero = true;
+        while (iter.hasNext()) {
+            if (!primero) sb.append(", ");
+            Arista<T> arista = iter.next();
+            sb.append(arista.getDestino().getDato()).append("(").append(arista.getPeso()).append(")");
+            primero = false;
         }
-    }
-
-    public ListaEnlazada<Arista<T>> getAristas(Vertice<T> vertice) {
-        for (Tupla<Vertice<T>, ListaEnlazada<Arista<T>>> tupla : lista) {
-            if (tupla.getClave().equals(vertice)) {
-                return tupla.getValor();
-            }
-        }
-        return null;
+        return sb.toString();
     }
 }
-

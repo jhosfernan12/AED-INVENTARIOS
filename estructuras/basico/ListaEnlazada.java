@@ -1,5 +1,5 @@
 
-public class ListaEnlazada<T> implements Iterable<T> {
+public class ListaEnlazada<T> {
     private Nodo<T> cabeza;
     private int tamaño;
 
@@ -69,12 +69,41 @@ public class ListaEnlazada<T> implements Iterable<T> {
         return tamaño;
     }
 
-    @Override
-    public java.util.Iterator<T> iterator() {
+    public T obtener(int index) {
+        if (index < 0 || index >= tamaño) {
+            throw new IndexOutOfBoundsException("Índice fuera de rango: " + index);
+        }
+        Nodo<T> actual = cabeza;
+        for (int i = 0; i < index; i++) {
+            actual = actual.siguiente;
+        }
+        return actual.dato;
+    }
+
+    public boolean eliminar(int index) {
+        if (index < 0 || index >= tamaño) return false;
+
+        if (index == 0) {
+            cabeza = cabeza.siguiente;
+            tamaño--;
+            return true;
+        }
+
+        Nodo<T> actual = cabeza;
+        for (int i = 0; i < index - 1; i++) {
+            actual = actual.siguiente;
+        }
+
+        actual.siguiente = actual.siguiente.siguiente;
+        tamaño--;
+        return true;
+    }
+
+    public Iterador<T> iterador() {
         return new IteradorLista(cabeza);
     }
 
-    private class IteradorLista implements java.util.Iterator<T> {
+    private class IteradorLista implements Iterador<T> {
         private Nodo<T> actual;
 
         public IteradorLista(Nodo<T> cabeza) {

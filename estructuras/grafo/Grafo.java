@@ -1,5 +1,3 @@
-
-
 public class Grafo<T> {
     private ListaEnlazada<Vertice<T>> vertices;
 
@@ -14,21 +12,25 @@ public class Grafo<T> {
     }
 
     public boolean eliminarVertice(Vertice<T> vertice) {
-        // Primero eliminamos todas las aristas relacionadas
-        for (Vertice<T> v : vertices) {
+        // Primero eliminamos todas las aristas que llegan a este vértice
+        Iterador<Vertice<T>> iter = vertices.iterador();
+        while (iter.hasNext()) {
+            Vertice<T> v = iter.next();
+            // Eliminamos aristas que apuntan a vertice
             ListaEnlazada<Arista<T>> aristasAEliminar = new ListaEnlazada<>();
-            
-            for (Arista<T> a : v.getAristasSalientes()) {
+            Iterador<Arista<T>> iterAristas = v.getAristasSalientes().iterador();
+            while (iterAristas.hasNext()) {
+                Arista<T> a = iterAristas.next();
                 if (a.getDestino().equals(vertice)) {
                     aristasAEliminar.agregar(a);
                 }
             }
-            
-            for (Arista<T> a : aristasAEliminar) {
-                v.eliminarAristaSaliente(a);
+            // Quitamos aristas
+            Iterador<Arista<T>> iterEliminar = aristasAEliminar.iterador();
+            while (iterEliminar.hasNext()) {
+                v.eliminarAristaSaliente(iterEliminar.next());
             }
         }
-        
         return vertices.eliminar(vertice);
     }
 
@@ -36,7 +38,6 @@ public class Grafo<T> {
         if (!vertices.contiene(origen) || !vertices.contiene(destino)) {
             return null;
         }
-        
         Arista<T> arista = new Arista<>(origen, destino, peso);
         origen.agregarAristaSaliente(arista);
         destino.agregarAristaEntrante(arista);
@@ -55,13 +56,14 @@ public class Grafo<T> {
 
     public ListaEnlazada<Arista<T>> getAristas() {
         ListaEnlazada<Arista<T>> todasAristas = new ListaEnlazada<>();
-        
-        for (Vertice<T> v : vertices) {
-            for (Arista<T> a : v.getAristasSalientes()) {
-                todasAristas.agregar(a);
+        Iterador<Vertice<T>> iter = vertices.iterador();
+        while (iter.hasNext()) {
+            Vertice<T> v = iter.next();
+            Iterador<Arista<T>> iterAristas = v.getAristasSalientes().iterador();
+            while (iterAristas.hasNext()) {
+                todasAristas.agregar(iterAristas.next());
             }
         }
-        
         return todasAristas;
     }
 
@@ -78,18 +80,22 @@ public class Grafo<T> {
         StringBuilder sb = new StringBuilder();
         sb.append("Grafo con ").append(cantidadVertices()).append(" vértices y ")
           .append(cantidadAristas()).append(" aristas:\n");
-        
-        for (Vertice<T> v : vertices) {
+
+        Iterador<Vertice<T>> iter = vertices.iterador();
+        while (iter.hasNext()) {
+            Vertice<T> v = iter.next();
             sb.append(v.getDato()).append(" -> ");
+            Iterador<Arista<T>> iterAristas = v.getAristasSalientes().iterador();
             boolean primero = true;
-            for (Arista<T> a : v.getAristasSalientes()) {
+            while (iterAristas.hasNext()) {
                 if (!primero) sb.append(", ");
+                Arista<T> a = iterAristas.next();
                 sb.append(a.getDestino().getDato()).append("(").append(a.getPeso()).append(")");
                 primero = false;
             }
             sb.append("\n");
         }
-        
+
         return sb.toString();
     }
 }

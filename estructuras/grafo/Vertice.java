@@ -1,11 +1,13 @@
 
 public class Vertice<T> {
     private T dato;
+    private boolean visitado; // Nuevo campo
     private ListaEnlazada<Arista<T>> aristasSalientes;
     private ListaEnlazada<Arista<T>> aristasEntrantes;
 
     public Vertice(T dato) {
         this.dato = dato;
+        this.visitado = false;
         this.aristasSalientes = new ListaEnlazada<>();
         this.aristasEntrantes = new ListaEnlazada<>();
     }
@@ -16,6 +18,14 @@ public class Vertice<T> {
 
     public void setDato(T dato) {
         this.dato = dato;
+    }
+
+    public void setVisitado(boolean visitado) {
+        this.visitado = visitado;
+    }
+
+    public boolean isVisitado() {
+        return visitado;
     }
 
     public void agregarAristaSaliente(Arista<T> arista) {
