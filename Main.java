@@ -19,7 +19,7 @@ public class Main {
                 }
             }
         } catch (Exception e) {
-            System.err.println("No se pudo establecer Nimbus, se usará el look por defecto.");
+            System.err.println("No se pudo establecer Nimbus, se usara el look por defecto.");
         }
 
         // ==================================================
@@ -44,7 +44,7 @@ public class Main {
         almacen.conectarUbicaciones(d, e, 7);
 
         // ==================================================
-        // AGREGAR PRODUCTOS DE PRUEBA EN UBICACIÓN 'a'
+        // AGREGAR PRODUCTOS DE PRUEBA EN UBICACION 'a'
         // ==================================================
         Producto teclado = new Producto("Teclado", 101, 15);
         Producto mouse = new Producto("Mouse", 102, 30);
@@ -54,7 +54,7 @@ public class Main {
         // ==================================================
         // CREAR VENTANA PRINCIPAL
         // ==================================================
-        JFrame ventana = new JFrame("Visualización del Almacén");
+        JFrame ventana = new JFrame("Visualizacion del Almacen");
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         VisualizadorAlmacen visualizador = new VisualizadorAlmacen(almacen.getGrafo());
 
@@ -64,7 +64,7 @@ public class Main {
         JMenu menuProductos = new JMenu("Productos");
         MenuHandler menuHandler = new MenuHandler(almacen);
 
-        JMenuItem itemListarProductos = new JMenuItem("Listar productos en ubicación");
+        JMenuItem itemListarProductos = new JMenuItem("Listar productos en ubicacion");
         itemListarProductos.addActionListener(evt -> menuHandler.listarProductos());
         menuProductos.add(itemListarProductos);
 
@@ -76,15 +76,15 @@ public class Main {
         itemEliminarProducto.addActionListener(evt -> menuHandler.eliminarProducto());
         menuProductos.add(itemEliminarProducto);
 
-       JMenuItem itemVisualizarArbolB = new JMenuItem("Visualizar Árbol B de productos");
+       JMenuItem itemVisualizarArbolB = new JMenuItem("Visualizar Arbol B de productos");
         itemVisualizarArbolB.addActionListener(evt -> {
-            String nombreUbicacion = JOptionPane.showInputDialog("Nombre de la ubicación para mostrar productos:");
+            String nombreUbicacion = JOptionPane.showInputDialog("Nombre de la ubicacion para mostrar productos:");
             if (nombreUbicacion != null && !nombreUbicacion.trim().isEmpty()) {
                 Vertice<Ubicacion> v = almacen.buscarVerticePorNombre(nombreUbicacion.trim());
                 if (v != null) {
-                    mostrarArbolB(v); // Ahora llamamos al método arreglado
+                    mostrarArbolB(v); // Ahora llamamos al metodo arreglado
                 } else {
-                    JOptionPane.showMessageDialog(null, "❌ No existe la ubicación.");
+                    JOptionPane.showMessageDialog(null, "No existe la ubicacion.");
                 }
             }
         });
@@ -92,17 +92,17 @@ public class Main {
 
 
         JMenu menuOperaciones = new JMenu("Operaciones");
-        JMenuItem itemRutaCorta = new JMenuItem("Ruta más corta");
+        JMenuItem itemRutaCorta = new JMenuItem("Ruta mas corta");
         itemRutaCorta.addActionListener(evt -> {
-            String origenNombre = JOptionPane.showInputDialog("Ubicación de origen:");
-            String destinoNombre = JOptionPane.showInputDialog("Ubicación de destino:");
+            String origenNombre = JOptionPane.showInputDialog("Ubicacion de origen:");
+            String destinoNombre = JOptionPane.showInputDialog("Ubicacion de destino:");
             if (origenNombre != null && destinoNombre != null && !origenNombre.trim().isEmpty() && !destinoNombre.trim().isEmpty()) {
                 Vertice<Ubicacion> origen = almacen.buscarVerticePorNombre(origenNombre.trim());
                 Vertice<Ubicacion> destino = almacen.buscarVerticePorNombre(destinoNombre.trim());
                 if (origen != null && destino != null) {
                     mostrarRutaCorta(almacen, origen, destino);
                 } else {
-                    JOptionPane.showMessageDialog(null, "❌ Una de las ubicaciones no existe.");
+                    JOptionPane.showMessageDialog(null, "Una de las ubicaciones no existe.");
                 }
             }
         });
@@ -111,7 +111,7 @@ public class Main {
         JMenuItem itemDetectarCiclos = new JMenuItem("Detectar ciclos");
         itemDetectarCiclos.addActionListener(evt -> {
             JOptionPane.showMessageDialog(null,
-                    "¿Hay ciclos? " + (almacen.detectarCiclo() ? "Sí" : "No"));
+                    "¿Hay ciclos? " + (almacen.detectarCiclo() ? "Si" : "No"));
         });
         menuOperaciones.add(itemDetectarCiclos);
 
@@ -122,15 +122,15 @@ public class Main {
         JMenu menuNodos = new JMenu("Nodos");
         JMenuItem itemAgregarNodo = new JMenuItem("Agregar nodo");
         itemAgregarNodo.addActionListener(evt -> {
-            String nombre = JOptionPane.showInputDialog("Nombre de la ubicación:");
+            String nombre = JOptionPane.showInputDialog("Nombre de la ubicacion:");
             if (nombre != null && !nombre.trim().isEmpty()) {
                 Vertice<Ubicacion> nuevo = almacen.agregarUbicacion(nombre.trim());
                 if (nuevo == null) {
-                    JOptionPane.showMessageDialog(null, "No se creó la ubicación (ya existe).");
+                    JOptionPane.showMessageDialog(null, "No se creo la ubicacion (ya existe).");
                     return;
                 }
                 while (true) {
-                    String nodoDestino = JOptionPane.showInputDialog("¿A qué nodo quieres conectarlo? (dejar en blanco para terminar)");
+                    String nodoDestino = JOptionPane.showInputDialog("¿A que nodo quieres conectarlo? (dejar en blanco para terminar)");
                     if (nodoDestino == null || nodoDestino.trim().isEmpty()) {
                         break;
                     }
@@ -141,10 +141,10 @@ public class Main {
                             double peso = Double.parseDouble(pesoStr);
                             almacen.conectarUbicaciones(nuevo, destino, peso);
                         } catch (NumberFormatException e1) {
-                            JOptionPane.showMessageDialog(null, "❌ El peso no es válido.");
+                            JOptionPane.showMessageDialog(null, "El peso no es valido");
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "❌ No existe el nodo destino.");
+                        JOptionPane.showMessageDialog(null, "No existe el nodo destino");
                     }
                 }
                 actualizarVisualizacion(ventana, almacen);
@@ -154,14 +154,14 @@ public class Main {
 
         JMenuItem itemEliminarNodo = new JMenuItem("Eliminar nodo");
         itemEliminarNodo.addActionListener(evt -> {
-            String nombre = JOptionPane.showInputDialog("Nombre de la ubicación a eliminar:");
+            String nombre = JOptionPane.showInputDialog("Nombre de la ubicacion a eliminar:");
             if (nombre != null && !nombre.trim().isEmpty()) {
                 boolean eliminado = almacen.eliminarUbicacion(nombre.trim());
                 if (eliminado) {
-                    JOptionPane.showMessageDialog(null, "✅ Ubicación eliminada correctamente.");
+                    JOptionPane.showMessageDialog(null, "Ubicacion eliminada correctamente");
                     actualizarVisualizacion(ventana, almacen);
                 } else {
-                    JOptionPane.showMessageDialog(null, "❌ No existe la ubicación.");
+                    JOptionPane.showMessageDialog(null, "No existe la ubicacion");
                 }
             }
         });
@@ -185,11 +185,11 @@ public class Main {
     public static void mostrarRutaCorta(Almacen almacen, Vertice<Ubicacion> inicio, Vertice<Ubicacion> fin) {
         ListaEnlazada<Vertice<Ubicacion>> camino = almacen.caminoMasCorto(inicio, fin);
         if (camino == null || camino.tamaño() == 0) {
-            JOptionPane.showMessageDialog(null, "❌ No existe camino.");
+            JOptionPane.showMessageDialog(null, "No existe camino.");
             return;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("Ruta más corta de ").append(inicio.getDato().getNombre())
+        sb.append("Ruta mas corta de ").append(inicio.getDato().getNombre())
             .append(" a ").append(fin.getDato().getNombre()).append(":\n");
         for (int i = 0; i < camino.tamaño(); i++) {
             sb.append(camino.obtener(i).getDato().getNombre());
@@ -223,20 +223,20 @@ public class Main {
     }
 
     // ==================================================
-    // MOSTRAR ÁRBOL B DE PRODUCTOS EN UNA UBICACIÓN
+    // MOSTRAR ARBOL B DE PRODUCTOS EN UNA UBICACION
     // ==================================================
    public static void mostrarArbolB(Vertice<Ubicacion> ubicacion) {
     // Crear nueva ventana
-    JFrame ventanaArbol = new JFrame("Árbol B de Productos en " + ubicacion.getDato().getNombre());
+    JFrame ventanaArbol = new JFrame("Arbol B de Productos en " + ubicacion.getDato().getNombre());
     ventanaArbol.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     ventanaArbol.setSize(600, 400);
     ventanaArbol.setLocationRelativeTo(null);
 
-    // Aquí asumimos que tienes un JPanel o componente para representar el Árbol B
+    // Aqui asumimos que tienes un JPanel o componente para representar el Arbol B
     // Por ejemplo:
     VisualizadorArbolB panelArbol = new VisualizadorArbolB(ubicacion.getDato().getProductos());
 
-    // ✅ Añadir EL PANEL, NO OTRO JFRAME
+    // Anadir EL PANEL, NO OTRO JFRAME
     ventanaArbol.add(panelArbol);
     ventanaArbol.setVisible(true);
 }
