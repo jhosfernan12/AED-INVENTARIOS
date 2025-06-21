@@ -1,7 +1,12 @@
+package algoritmos;
+import estructuras.Iterador;
+import estructuras.Cola;
+import estructuras.grafo.Arista;
+import estructuras.grafo.Vertice;
+import estructuras.grafo.Grafo;
+
 public class BusquedaGrafo {
 
-
-  // Realiza un recorrido BFS a partir de un vértice inicial
 
     public <T> void bfs(Grafo<T> grafo, Vertice<T> inicio) {
         // Reiniciamos la marca de visitado en todos los vertices

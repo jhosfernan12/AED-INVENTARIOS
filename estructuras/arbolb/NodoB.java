@@ -1,3 +1,5 @@
+package estructuras.arbolb;
+
 import java.util.ArrayList;
 
 public class NodoB<E extends Comparable<E>> {
@@ -46,6 +48,11 @@ public class NodoB<E extends Comparable<E>> {
         } 
         return false; 
     }
+
+    public boolean esHoja() {
+        return contador == 0 || hijos.get(0) == null;
+    }
+
 
     //Busca un nodo y devuelve la posicion donde se encuentra, si no se encuentra devuelve la posicion donde deberia estar
     public boolean buscarNodo (E clave, int[] pos) { 

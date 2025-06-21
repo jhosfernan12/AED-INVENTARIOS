@@ -1,3 +1,4 @@
+package estructuras;
 
 public class Pila<T> {
     private Nodo<T> tope;

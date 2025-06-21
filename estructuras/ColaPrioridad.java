@@ -1,14 +1,17 @@
+package estructuras;
+
 public class ColaPrioridad<T> {
     private Nodo<T> frente;
 
-    private class Nodo<E> {
-        E dato;
+    private static class Nodo<T> {
+        T dato;
         double prioridad;
-        Nodo<E> siguiente;
+        Nodo<T> siguiente;
 
-        Nodo(E dato, double prioridad) {
+        Nodo(T dato, double prioridad) {
             this.dato = dato;
             this.prioridad = prioridad;
+            this.siguiente = null;
         }
     }
 
@@ -16,7 +19,7 @@ public class ColaPrioridad<T> {
         this.frente = null;
     }
 
-    public void insertar(T elemento, double prioridad) {
+    public void encolar(T elemento, double prioridad) {
         Nodo<T> nuevo = new Nodo<>(elemento, prioridad);
         if (frente == null || prioridad < frente.prioridad) {
             nuevo.siguiente = frente;
@@ -31,8 +34,10 @@ public class ColaPrioridad<T> {
         }
     }
 
-    public T extraer() {
-        if (frente == null) return null;
+    public T desencolar() {
+        if (frente == null) {
+            return null;
+        }
         T dato = frente.dato;
         frente = frente.siguiente;
         return dato;

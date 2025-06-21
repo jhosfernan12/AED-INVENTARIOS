@@ -1,3 +1,7 @@
+package estructuras.arbolb;
+
+import estructuras.ListaEnlazada;
+
 public class ArbolB<E extends Comparable<E>> {
     private NodoB<E> raiz;
     private int orden;
@@ -88,10 +92,11 @@ public class ArbolB<E extends Comparable<E>> {
         nuevoDerecha.contador = (orden - 1) - posMediana;
         nodo.contador = posMediana;
 
-        if (k <= orden / 2)
+        if (k <= orden / 2) {
             insertarEnNodo(nodo, clave, derecho, k);
-        else
+        } else {
             insertarEnNodo(nuevoDerecha, clave, derecho, k - posMediana);
+        }
 
         E mediana = nodo.claves.get(nodo.contador - 1);
         nuevoDerecha.hijos.set(0, nodo.hijos.get(nodo.contador));
@@ -107,7 +112,7 @@ public class ArbolB<E extends Comparable<E>> {
 
         while (actual != null) {
             if (actual.buscarNodo(clave, pos)) {
-                System.out.println(clave + " se encuentra en el nodo " + actual.IDNodo + " en la posición " + pos[0]);
+                System.out.println(clave + " se encuentra en el nodo " + actual.IDNodo + " en la posicion " + pos[0]);
                 return true;
             }
             actual = actual.hijos.get(pos[0]);
@@ -115,10 +120,48 @@ public class ArbolB<E extends Comparable<E>> {
         return false;
     }
 
-    // Mostrar árbol en forma preorden
+    public void eliminar(E clave) {
+        if (raiz == null) {
+            System.out.println("Arbol vacio.");
+            return;
+        }
+        eliminarRecursivo(raiz, clave);
+        if (raiz.contador == 0 && !raiz.esHoja()) {
+            raiz = raiz.hijos.get(0);
+        }
+    }
+
+        private void eliminarRecursivo(NodoB<E> nodo, E clave) {
+        int pos[] = new int[1];
+        boolean encontrado = nodo.buscarNodo(clave, pos);
+        if (encontrado) {
+            if (nodo.esHoja()) {
+                // Si es hoja, simplemente elimina
+                for (int i = pos[0]; i < nodo.contador - 1; i++) {
+                    nodo.claves.set(i, nodo.claves.get(i + 1));
+                }
+                nodo.contador--;
+            } else {
+                // Aqui iria logica para reemplazar por predecesor/sucesor,
+                // para simplificacion asumimos solo eliminacion en hojas.
+                System.out.println("La eliminacion de claves en nodos internos no esta implementada.");
+            }
+        } else {
+            if (nodo.esHoja()) {
+                // No encontrado
+                return;
+            } else {
+                eliminarRecursivo(nodo.hijos.get(pos[0]), clave);
+            }
+        }
+    }
+
+
+
+    // Mostrar arbol en forma preorden
     public void imprimir() {
         if (estaVacio()) {
-            System.out.println("El árbol B está vacío.");
+            System.out.println("El arbol B esta vacio.");
         } else {
             imprimirNodo(raiz, 0);
         }
@@ -132,6 +175,45 @@ public class ArbolB<E extends Comparable<E>> {
                 if (hijo != null) {
                     imprimirNodo(hijo, nivel + 1);
                 }
+            }
+        }
+    }
+
+    public void imprimirTodos() {
+        imprimirTodosRec(raiz);
+    }
+
+    private void imprimirTodosRec(NodoB<E> nodo) {
+        if (nodo != null) {
+            for (int i = 0; i < nodo.contador; i++) {
+                if (nodo.hijos.get(i) != null) {
+                    imprimirTodosRec(nodo.hijos.get(i));
+                }
+                System.out.println(nodo.claves.get(i).toString());
+            }
+            if (nodo.hijos.get(nodo.contador) != null) {
+                imprimirTodosRec(nodo.hijos.get(nodo.contador));
+            }
+        }
+    }
+
+
+    public ListaEnlazada<E> obtenerTodos() {
+        ListaEnlazada<E> todos = new ListaEnlazada<>();
+        obtenerTodosRec(raiz, todos);
+        return todos;
+    }
+
+    private void obtenerTodosRec(NodoB<E> nodo, ListaEnlazada<E> todos) {
+        if (nodo != null) {
+            for (int i = 0; i < nodo.contador; i++) {
+                if (nodo.hijos.get(i) != null) {
+                    obtenerTodosRec(nodo.hijos.get(i), todos);
+                }
+                todos.agregar(nodo.claves.get(i));
+            }
+            if (nodo.hijos.get(nodo.contador) != null) {
+                obtenerTodosRec(nodo.hijos.get(nodo.contador), todos);
             }
         }
     }

@@ -1,21 +1,33 @@
+package estructuras;
 
 public class ListaEnlazada<T> {
     private Nodo<T> cabeza;
     private int tamaño;
 
-    private static class Nodo<T> {
-        T dato;
-        Nodo<T> siguiente;
+    public static class Nodo<T> {
+    public T dato;
+    public Nodo<T> siguiente;
 
-        Nodo(T dato) {
+        public Nodo(T dato) {
             this.dato = dato;
             this.siguiente = null;
         }
     }
 
+    public interface Condicion<T> {
+        boolean test(T dato);
+    }
+
+
+
     public ListaEnlazada() {
         cabeza = null;
         tamaño = 0;
+    }
+
+    public Nodo<T> getCabeza()
+    {
+        return this.cabeza;
     }
 
     public void agregar(T dato) {
@@ -98,6 +110,29 @@ public class ListaEnlazada<T> {
         tamaño--;
         return true;
     }
+
+        public void eliminarSi(Condicion<T> condicion) {
+        Nodo<T> actual = cabeza;
+        Nodo<T> anterior = null;
+
+        while (actual != null) {
+            if (condicion.test(actual.dato)) {
+                // Eliminar
+                if (anterior == null) {
+                    cabeza = actual.siguiente;
+                } else {
+                    anterior.siguiente = actual.siguiente;
+                }
+                tamaño--;
+            } else {
+                anterior = actual;
+            }
+            actual = actual.siguiente;
+        }
+    }
+
+    
+
 
     public Iterador<T> iterador() {
         return new IteradorLista(cabeza);

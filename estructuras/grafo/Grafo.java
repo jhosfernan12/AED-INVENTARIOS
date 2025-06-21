@@ -1,3 +1,8 @@
+package estructuras.grafo;
+
+import estructuras.ListaEnlazada;
+import estructuras.Iterador;
+
 public class Grafo<T> {
     private ListaEnlazada<Vertice<T>> vertices;
 
@@ -12,7 +17,7 @@ public class Grafo<T> {
     }
 
     public boolean eliminarVertice(Vertice<T> vertice) {
-        // Primero eliminamos todas las aristas que llegan a este vértice
+        // Primero eliminamos todas las aristas que llegan a este vertice
         Iterador<Vertice<T>> iter = vertices.iterador();
         while (iter.hasNext()) {
             Vertice<T> v = iter.next();
@@ -98,4 +103,24 @@ public class Grafo<T> {
 
         return sb.toString();
     }
+
+    public void cerrarArista(Vertice<T> origen, Vertice<T> destino) {
+    ListaEnlazada<Arista<T>> paraEliminar = new ListaEnlazada<>();
+
+        // Recorremos todas las aristas salientes del vértice origen
+        for (int i = 0; i < origen.getAristasSalientes().tamaño(); i++) {
+            Arista<T> a = origen.getAristasSalientes().obtener(i);
+            if (a.getDestino().equals(destino)) {
+                paraEliminar.agregar(a);
+            }
+        }
+
+        // Ahora eliminamos todas las aristas encontradas
+        for (int i = 0; i < paraEliminar.tamaño(); i++) {
+            eliminarArista(paraEliminar.obtener(i));
+        }
+    }
+
+
+
 }

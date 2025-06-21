@@ -1,3 +1,4 @@
+package estructuras.grafo;
 
 public class Arista<T> {
     private Vertice<T> origen;

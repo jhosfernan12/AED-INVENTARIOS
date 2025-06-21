@@ -1,3 +1,4 @@
+package estructuras;
 
 public interface Iterador<T> {
     boolean hasNext();

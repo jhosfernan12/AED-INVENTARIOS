@@ -1,3 +1,8 @@
+package estructuras.grafo;
+import estructuras.ListaEnlazada;
+import estructuras.Iterador;
+
+
 public class ListaAdyacencia<T> {
     private Vertice<T> origen;
     private ListaEnlazada<Arista<T>> aristas;

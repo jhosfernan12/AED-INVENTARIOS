@@ -1,3 +1,5 @@
+package estructuras;
+
 public class Cola<T> {
     private Nodo<T> frente;
     private Nodo<T> fin;
