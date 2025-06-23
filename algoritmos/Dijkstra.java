@@ -6,54 +6,6 @@ import estructuras.ListaEnlazada;
 
 public class Dijkstra {
 
-    // Devuelve una ListaEnlazada<Vertice<T>>
-    public <T> ListaEnlazada<Vertice<T>> caminoMasCortoRuta(Grafo<T> grafo, Vertice<T> origen, Vertice<T> destino) {
-        int n = grafo.cantidadVertices();
-        Vertice<T>[] vertices = new Vertice[n];
-        double[] dist = new double[n];
-        Vertice<T>[] previo = new Vertice[n];
-
-        for (int i = 0; i < n; i++) {
-            vertices[i] = grafo.getVertices().obtener(i);
-            dist[i] = Double.POSITIVE_INFINITY;
-            previo[i] = null;
-        }
-
-        int indiceOrigen = obtenerIndice(vertices, origen);
-        dist[indiceOrigen] = 0;
-
-        ColaPrioridad<Par> cola = new ColaPrioridad<>();
-        cola.encolar(new Par(indiceOrigen, 0.0), 0.0);
-
-        while (!cola.estaVacia()) {
-            Par actual = cola.desencolar();
-            int u = actual.indice;
-
-
-            ListaEnlazada.Nodo<Arista<T>> nodo = vertices[u].getAristasSalientes().getCabeza();
-            while (nodo != null) {
-                Arista<T> a = nodo.dato;
-                int v = obtenerIndice(vertices, a.getDestino());
-                double nuevaDistancia = dist[u] + a.getPeso();
-
-                if (nuevaDistancia < dist[v]) {
-                    dist[v] = nuevaDistancia;
-                    previo[v] = vertices[u];
-                    cola.encolar(new Par(v, nuevaDistancia), nuevaDistancia);
-                }
-                nodo = nodo.siguiente;
-            }
-        }
-
-        int indiceDestino = obtenerIndice(vertices, destino);
-        if (dist[indiceDestino] == Double.POSITIVE_INFINITY) {
-            return new ListaEnlazada<>(); // camino vacio
-        }
-
-        ListaEnlazada<Vertice<T>> camino = new ListaEnlazada<>();
-        construirCamino(vertices, previo, indiceDestino, camino);
-        return camino;
-    }
 
      public <T> ListaEnlazada<Vertice<T>> caminoMasCorto(Grafo<T> grafo,
                                                           Vertice<T> inicio,
