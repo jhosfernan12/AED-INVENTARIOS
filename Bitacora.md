@@ -14,8 +14,8 @@ Tuvimos nuestra primera reunión como grupo por Microsoft Teams para coordinar l
 ## 20-06-2025 - Viernes
 **Kimberly Quispe** implemento:
 - BFS y Dijkstra
-- 
+  
 # 22-06-2025 - Sabado
-**Todo el Equipo**
+**Todo el Equipo** implemento:
 -Se implemento la visualizacion grafica
 -Se corrigieron errores
