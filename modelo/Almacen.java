@@ -203,7 +203,7 @@ public class Almacen {
         }
     }
 
-    // 3️⃣ Cerrar pasillo por nombre
+    //  Cerrar pasillo por nombre
     public void cerrarPasilloPorNombre(String nombreOrigen, String nombreDestino) {
         Vertice<Ubicacion> origen = buscarVerticePorNombre(nombreOrigen);
         Vertice<Ubicacion> destino = buscarVerticePorNombre(nombreDestino);
@@ -214,7 +214,7 @@ public class Almacen {
         }
     }
 
-    // 4️⃣ Agregar producto por nombre
+    //  Agregar producto por nombre
     public void agregarProductoPorNombre(String nombreUbicacion, Producto producto) {
         Vertice<Ubicacion> v = buscarVerticePorNombre(nombreUbicacion);
         if (v != null) {
@@ -224,7 +224,7 @@ public class Almacen {
         }
     }
 
-    // 5️⃣ Eliminar producto por nombre
+    // Eliminar producto por nombre
     public void eliminarProductoPorNombre(String nombreUbicacion, int codigoProducto) {
         Vertice<Ubicacion> v = buscarVerticePorNombre(nombreUbicacion);
         if (v != null) {
