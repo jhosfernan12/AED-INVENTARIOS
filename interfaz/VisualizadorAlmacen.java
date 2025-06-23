@@ -25,7 +25,7 @@ public class VisualizadorAlmacen extends JPanel {
             positions[i] = new Point(x, y);
         }
 
-        // 1️⃣ Dibujar vértices
+        // Dibujar vértices
         for (int i = 0; i < n; i++) {
             Vertice<Ubicacion> v = grafo.getVertices().obtener(i);
             g.setColor(Color.GREEN);
@@ -35,7 +35,7 @@ public class VisualizadorAlmacen extends JPanel {
             g.drawString(v.getDato().getNombre(), positions[i].x - 5, positions[i].y + 5);
         }
 
-        // 2️⃣ Dibujar todas las aristas
+        //  Dibujar todas las aristas
         for (int i = 0; i < n; i++) {
             Vertice<Ubicacion> origen = grafo.getVertices().obtener(i);
             Iterador<Arista<Ubicacion>> it = origen.getAristasSalientes().iterador();
